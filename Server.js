@@ -22,12 +22,15 @@ function readDir(currentDirPath, callback) {
         });
     });
 }
-
-readDir(directoryPath, function(filePath, stat) {
-    fq.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
-	   if (err) return console.error(err);
-	   if(data.includes(searchKey) > 0) {
-	   		console.log(filePath);
-	   }
+searchDir(directoryPath, searchKey);
+function searchDir(directoryPath, searchKey) {
+	readDir(directoryPath, function(filePath, stat) {
+	    fq.readFile(filePath, {encoding: 'utf8'}, function (err, data) {
+		   if (err) return console.error(err);
+		   if(data.includes(searchKey) > 0) {
+		   		console.log(filePath);
+		   }
+		});
 	});
-});
+}
+module.exports.searchDir = searchDir;
