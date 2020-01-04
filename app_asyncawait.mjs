@@ -19,13 +19,13 @@ async function checkStringInFile(file) {
     return data;
 }
 
-async function fetchData() {
-  const list = await rreaddir(directoryPath);
+async function fetchData(directory, key) {
+  const list = await rreaddir(directory);
   const finalList = [];
   for (let index in list) {
     try {
       const data = await checkStringInFile(list[index]);
-      if(data.includes(searchKey) > 0) {
+      if(data.includes(key) > 0) {
           finalList.push(list[index]);
       }
     } catch(err) {
@@ -36,3 +36,4 @@ async function fetchData() {
 }
 
 fetchData();
+module.exports.fetchData = fetchData;

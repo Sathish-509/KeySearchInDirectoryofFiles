@@ -1,17 +1,20 @@
-const ServerJs = require('./Server.js');
+const app = require('./app_asyncawait.mjs');
 const sinon = require('sinon');
 const fs = require("fs");
-const FileQueue = require('filequeue');
-const fq = new FileQueue(100);
+
 
 describe('Finding List of files containing search key', function () {
+	beforeEach(() => {
+	    readDirStub = sinon.stub(fs, 'readdir').returns(['C:\\Users\\sathish\\Documents\\SearchFiles\\Server.js']);
+	    readFileStub = sinon.stub(fs, 'readFile').returns(['C:\\Users\\sathish\\Documents\\SearchFiles\\Server.js']);
+	})
 
+	afterEach(() => {
+	    readDirStub.restore();
+	    readFileStub.restore();
+	})
     it('should return list of files which contain search key', function (done) {
-		sinon.stub(fs, 'readdir').withArgs('C:\\Users\\sathish\\Documents\\SearchFiles')
-		.returns('C:\\Users\\sathish\\Documents\\SearchFiles\\Server.js');
-		sinon.stub(fq, 'readFile').withArgs('C:\\Users\\sathish\\Documents\\SearchFiles\\Server.js')
-		.returns('C:\\Users\\sathish\\Documents\\SearchFiles\\Server.js');
-		ServerJs.searchDir("C:\\Users\\sathish\\Documents\\SearchFiles", "enableProdMode");
+		app.fetchData("C:\\Users\\sathish\\Documents\\SearchFiles", "enableProdMode");
 		done();
 	});
 });
