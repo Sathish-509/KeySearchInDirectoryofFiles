@@ -35,5 +35,5 @@ async function fetchData(directory, key) {
   console.log(finalList);
 }
 
-fetchData();
-module.exports.fetchData = fetchData;
+fetchData(directoryPath, searchKey);
+export default fetchData;
